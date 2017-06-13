@@ -28,7 +28,7 @@ namespace WordPressPluginAnalytics
             var assembly = Assembly.GetEntryAssembly();
             var config = new Config();            
             var commandTypes = from type in assembly.GetTypes()
-                               where type.Namespace == "WordPressOrgCrawler.Commands"
+                               where type.Namespace == "WordPressPluginAnalytics.Commands"
                                where !type.GetTypeInfo().IsAbstract
                                where type.GetInterfaces().Contains(typeof(ICommand))
                                select type;

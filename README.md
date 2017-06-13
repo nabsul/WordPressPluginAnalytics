@@ -2,6 +2,12 @@
 
 The project consists of a series of tools used to extract and analyze hook usage data in public WordPress.org plugins.
 
+# Building the project
+
+The build this project, make sure you have dotnet core installed, check out this code and run:
+- `dotnet restore`
+- `dotnet build`
+
 # Initial setup configuration
 
 The tool relies Azure blob storage and data lake analytics to perform its operations. 
