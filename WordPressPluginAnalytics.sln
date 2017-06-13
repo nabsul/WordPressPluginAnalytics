@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordPressOrgCrawler", "WordPressOrgCrawler.csproj", "{71A1EE3F-320F-4FF6-A0AB-BD49D33019A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordPressPluginAnalytics", "WordPressPluginAnalytics.csproj", "{71A1EE3F-320F-4FF6-A0AB-BD49D33019A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

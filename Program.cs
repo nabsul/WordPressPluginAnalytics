@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using WordPressOrgCrawler.Commands;
+using WordPressPluginAnalytics.Commands;
 using System.Reflection;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 using System.Text.RegularExpressions;
 
-namespace WordPressOrgCrawler
+namespace WordPressPluginAnalytics
 {
     class Program
     {

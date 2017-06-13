@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using cloudscribe.HtmlAgilityPack;
 using Microsoft.WindowsAzure.Storage.Blob;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 
-namespace WordPressOrgCrawler.Commands
+namespace WordPressPluginAnalytics.Commands
 {
     public class DownloadCommand : ICommand
     {
@@ -24,19 +24,8 @@ namespace WordPressOrgCrawler.Commands
             _config = config;
             _container = _config.BlobContainer;
             _errors = new StreamWriter(File.OpenWrite("./errors.log"));
-
-            var subCommand = _config.Args[2];
-            switch (subCommand)
-            {
-                case "plugins":
-                    await DownloadPluginsAsync();
-                    break;
-                case "wordpress":
-                    await DownloadWordPressAsync();
-                    break;
-                default:
-                    throw new Exception($"I don't know how to download {subCommand}");
-            }
+            await DownloadWordPressAsync();
+            await DownloadPluginsAsync();
         }
 
         private async Task DownloadWordPressAsync()

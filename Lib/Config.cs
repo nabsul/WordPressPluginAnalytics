@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace WordPressOrgCrawler.Lib
+namespace WordPressPluginAnalytics.Lib
 {
     public class Config
     {

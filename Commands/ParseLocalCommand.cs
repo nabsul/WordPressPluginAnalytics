@@ -3,9 +3,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 
-namespace WordPressOrgCrawler.Commands
+namespace WordPressPluginAnalytics.Commands
 {
     public class ParseLocalCommand : ICommand
     {

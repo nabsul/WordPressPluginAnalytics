@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 using Microsoft.Rest.Azure.Authentication;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Analytics;
@@ -13,7 +13,7 @@ using FileType = Microsoft.Azure.Management.DataLake.Store.Models.FileType;
 using Microsoft.Azure.Management.DataLake.Analytics.Models;
 using System.Linq;
 
-namespace WordPressOrgCrawler.Commands
+namespace WordPressPluginAnalytics.Commands
 {
     public class DatalakeCommand : ICommand
     {
@@ -82,13 +82,19 @@ namespace WordPressOrgCrawler.Commands
             Console.WriteLine(JsonConvert.SerializeObject(result, Formatting.Indented));
         }
 
-        private const int FileChunkSize = 20000000; // upload file in 10M byte chunks
 
         private async Task UploadAsync()
         {
             var client = new DataLakeStoreFileSystemManagementClient(_credentials);
-            var fileName = _config.Args[3];
-            var destinationPath = _config.Args[4];
+            await UploadFileAsync(client, $"{_config.BlobContainerName}-wordpress.tsv.gz");
+            await UploadFileAsync(client, $"{_config.BlobContainerName}-plugin.tsv.gz");
+        }
+
+        private const int FileChunkSize = 20000000; // upload file in 10M byte chunks
+
+        private async Task UploadFileAsync(DataLakeStoreFileSystemManagementClient client, string fileName)
+        {
+            var destinationPath = $"/{fileName}";
             var buffer = new byte[FileChunkSize];
             var uploadChunks = new List<string>();
             int chunkNum = 0;
@@ -112,14 +118,15 @@ namespace WordPressOrgCrawler.Commands
             foreach(var chunk in uploadChunks)
             {
                 await client.FileSystem.DeleteAsync(_config.DatalakeAccount, chunk);
-            }
+            }            
         }
 
         private async Task DownloadAsync()
         {
             var client = new DataLakeStoreFileSystemManagementClient(_credentials);
-            var stream = await client.FileSystem.OpenAsync(_config.DatalakeAccount, _config.Args[3]);
-            var output = File.OpenWrite(_config.Args[4]);
+            var fileName = $"{_config.BlobContainerName}-hook_usage.tsv.gz";
+            var stream = await client.FileSystem.OpenAsync(_config.DatalakeAccount, $"/{fileName}");
+            var output = File.OpenWrite(fileName);
             await stream.CopyToAsync(output);
         }
     }

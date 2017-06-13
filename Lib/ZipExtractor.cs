@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Text;
 using Devsense.PHP.Syntax;
 
-namespace WordPressOrgCrawler.Lib
+namespace WordPressPluginAnalytics.Lib
 {
     public class ZipExtractor : IDisposable
     {

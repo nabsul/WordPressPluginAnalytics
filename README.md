@@ -1,10 +1,10 @@
-#WordPress Analytics - Hooks Usage
+# WordPress Plugin Analytics - Hooks Usage
 
 The project consists of a series of tools used to extract and analyze hook usage data in public WordPress.org plugins.
 
 # Initial setup configuration
 
-The tool relies on Azure blob storage and data lake analytics to perform its operations. 
+The tool relies Azure blob storage and data lake analytics to perform its operations. 
 Config settings should be placed in `config.json`. You can use `config.template.json` as a template. 
 Here's some more information about these settings:
 
@@ -19,8 +19,8 @@ Here's some more information about these settings:
 
 Here are the commands/steps for running this tool:
 
-- `dotnet run download [wordpress/plugins]` to copy WordPress and all the plugins to blob storage
-- `dotnet run extract [wordpress/plugin]` to extract hook usage from WordPress and the plugins
-- `dotnet run datalake upload [file] [destination]` to upload the two extraction files to Data Lake storage
+- `dotnet run download` to copy WordPress and all the plugins to blob storage
+- `dotnet run extract` to extract hook usage from WordPress and the plugins
+- `dotnet run datalake upload` to upload the two extraction files to Data Lake storage
 - `dotnet run datalake submit` to run the Analytics job
-- `dotnet run datalake download [file]` to download the results from Data Lake storage
+- `dotnet run datalake download` to download the results from Data Lake storage

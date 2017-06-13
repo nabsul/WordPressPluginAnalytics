@@ -1,13 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 using System.IO.Compression;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Linq;
 using System.Collections.Concurrent;
 
-namespace WordPressOrgCrawler.Commands
+namespace WordPressPluginAnalytics.Commands
 {
     public class ExtractCommand : ICommand
     {
@@ -18,7 +18,12 @@ namespace WordPressOrgCrawler.Commands
 
         public async Task RunAsync(Config config)
         {
-            var subDirectoryName = config.Args[2];
+            await RunAsync(config, "wordpress");
+            await RunAsync(config, "plugin");
+        }
+        
+        private async Task RunAsync(Config config, string subDirectoryName)
+        {
             _errors = new StreamWriter(File.OpenWrite("./errors.log"));
             var outputName = $"{config.BlobContainerName}-{subDirectoryName}.tsv.gz";
             if(File.Exists(outputName))

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using WordPressOrgCrawler.Lib;
+using WordPressPluginAnalytics.Lib;
 
-namespace WordPressOrgCrawler.Commands
+namespace WordPressPluginAnalytics.Commands
 {
     public interface ICommand
     {
