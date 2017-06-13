@@ -1,0 +1,8 @@
+.vs
+.vscode
+.job
+bin
+obj
+packages
+*.log
+config.json

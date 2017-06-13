@@ -1,0 +1,63 @@
+DECLARE @WordPressExtraction string = "/@@WordPressExtraction@@";
+DECLARE @PluginExtraction string = "/@@PluginsExtraction@@";
+DECLARE @ResultOutput string = "/@@Output@@";
+
+/*
+DECLARE @WordPressExtraction string = "/wporgdata-20170611-wordpress.tsv.gz";
+DECLARE @PluginExtraction string = "/wporgdata-20170611-plugin.tsv.gz";
+DECLARE @ResultOutput string = "/wporgdata-20170611-hook_usage.tsv";
+*/
+
+@AllPlugins = EXTRACT 
+    pluginFile string, 
+    pluginName string, 
+    fileName string, 
+    lineNumber string, 
+    eventType string, 
+    eventValue string  
+FROM @PluginExtraction 
+USING Extractors.Tsv(silent: true, encoding: Encoding.UTF8, nullEscape: "NOT_DEFINED");
+
+@WordPress = EXTRACT 
+    pluginFile string, 
+    pluginName string, 
+    fileName string, 
+    lineNumber string, 
+    eventType string, 
+    eventValue string  
+FROM @WordPressExtraction 
+USING Extractors.Tsv(silent: true, encoding: Encoding.UTF8, nullEscape: "NOT_DEFINED");
+
+@PluginHookUsage = SELECT 
+    pluginName, 
+    ( eventType == "add_filter" ? "filter_" : "action_" ) + eventValue AS hookName,
+    COUNT() AS numUsages
+FROM @AllPlugins
+WHERE (!eventValue.StartsWith("unknown:")) AND (eventType == "add_filter" OR eventType == "add_action")
+GROUP BY pluginName, eventType, eventValue;
+
+// Count how many plugins use each hook
+@HookUsageCounts = SELECT 
+        hookName, 
+        COUNT() AS numPlugins, 
+        SUM(numUsages) AS numUsages 
+FROM @PluginHookUsage
+GROUP BY hookName;
+
+// get all hooks defined in WordPress Core
+@DefinedHooks = SELECT DISTINCT 
+    (eventType == "apply_filters" ? "filter_" : "action_" ) + eventValue AS hookName
+FROM @WordPress
+WHERE (!eventValue.StartsWith("unknown:")) AND (eventType == "apply_filters" OR eventType == "do_action");
+
+// join the two datasets
+@CountUsages = SELECT 
+        A.hookName, 
+        (B.hookName == null ? 0 : B.numPlugins) AS numPlugins,
+        (B.hookName == null ? 0 : B.numUsages) AS numUsages
+FROM @DefinedHooks AS A LEFT JOIN @HookUsageCounts AS B ON A.hookName == B.hookName;
+
+OUTPUT @CountUsages 
+TO @ResultOutput 
+ORDER BY numPlugins DESC
+USING Outputters.Tsv(quoting: false);

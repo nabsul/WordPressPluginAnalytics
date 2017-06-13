@@ -1,0 +1,8 @@
+{
+  "StorageCredentials": "DefaultEndpointsProtocol=https;AccountName=XXXXXX;AccountKey=XXXXX==;EndpointSuffix=core.windows.net",
+  "BlobContainerName": "wordpress-20170522",
+  "AppDomain": "XXXXXX.onmicrosoft.com",
+  "AppId": "123-1234-123-123-123",
+  "AppSecret": "XXXXX=",
+  "DatalakeAccount": ""
+}
