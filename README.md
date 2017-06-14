@@ -30,3 +30,5 @@ Here are the commands/steps for running this tool:
 - `dotnet run datalake upload` to upload the two extraction files to Data Lake storage
 - `dotnet run datalake submit` to run the Analytics job
 - `dotnet run datalake download` to download the results from Data Lake storage
+
+You can also use `dotnet run datalake list-files` and `dotnet run datalake list-jobs` to see files and jobs in your data lake account.
