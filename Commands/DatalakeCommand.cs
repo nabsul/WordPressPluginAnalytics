@@ -71,13 +71,13 @@ namespace WordPressPluginAnalytics.Commands
         private async Task SubmitJobAsync()
         {
             var script = File.ReadAllText("./Scripts/AnalyzeHooks.usql")
-                .Replace("@@WordPressExtraction@@", $"{_config.BlobContainer.Name}-wordpress.tsv.gz")
-                .Replace("@@PluginsExtraction@@", $"{_config.BlobContainer.Name}-plugin.tsv.gz")
-                .Replace("@@Output@@", $"{_config.BlobContainer.Name}-hook_usage.tsv");
+                .Replace("@@WordPressExtraction@@", $"{_config.BlobContainerName}-wordpress.tsv.gz")
+                .Replace("@@PluginsExtraction@@", $"{_config.BlobContainerName}-plugin.tsv.gz")
+                .Replace("@@Output@@", $"{_config.BlobContainerName}-hook_usage.tsv");
             
             var jobClient = new DataLakeAnalyticsJobManagementClient(_credentials);
             var jobProps = new USqlJobProperties(script);
-            var info = new JobInformation("WordPress Hook Usage Analysis", JobType.USql, jobProps, priority: 1, degreeOfParallelism: 1);
+            var info = new JobInformation($"WordPress Hook Usage Analysis - {_config.BlobContainerName}", JobType.USql, jobProps, priority: 1, degreeOfParallelism: 1);
             var result = await jobClient.Job.CreateAsync(_config.DatalakeAccount, Guid.NewGuid(), info);
             Console.WriteLine(JsonConvert.SerializeObject(result, Formatting.Indented));
         }
@@ -124,7 +124,7 @@ namespace WordPressPluginAnalytics.Commands
         private async Task DownloadAsync()
         {
             var client = new DataLakeStoreFileSystemManagementClient(_credentials);
-            var fileName = $"{_config.BlobContainerName}-hook_usage.tsv.gz";
+            var fileName = $"{_config.BlobContainerName}-hook_usage.tsv";
             var stream = await client.FileSystem.OpenAsync(_config.DatalakeAccount, $"/{fileName}");
             var output = File.OpenWrite(fileName);
             await stream.CopyToAsync(output);
