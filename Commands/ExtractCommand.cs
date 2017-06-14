@@ -18,13 +18,15 @@ namespace WordPressPluginAnalytics.Commands
 
         public async Task RunAsync(Config config)
         {
-            await RunAsync(config, "wordpress");
-            await RunAsync(config, "plugin");
+            using(_errors = new StreamWriter(File.OpenWrite("./errors.log")))
+            {
+                await RunAsync(config, "wordpress");
+                await RunAsync(config, "plugin");
+            }
         }
-        
+
         private async Task RunAsync(Config config, string subDirectoryName)
         {
-            _errors = new StreamWriter(File.OpenWrite("./errors.log"));
             var outputName = $"{config.BlobContainerName}-{subDirectoryName}.tsv.gz";
             if(File.Exists(outputName))
             {
