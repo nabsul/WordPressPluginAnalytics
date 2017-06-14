@@ -11,7 +11,7 @@ To build this project, make sure you have dotnet core installed, check out this 
 
 # Initial setup configuration
 
-The tool relies Azure blob storage and data lake analytics to perform its operations. 
+The tool relies on Azure blob storage and data lake analytics to perform its operations. 
 Config settings should be placed in `config.json`. You can use `config.template.json` as a template. 
 Here's some more information about these settings:
 
