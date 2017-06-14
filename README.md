@@ -1,10 +1,11 @@
 # WordPress Plugin Analytics - Hooks Usage
 
-The project consists of a series of tools used to extract and analyze hook usage data in public WordPress.org plugins.
+This project consists of a command line tool that can be used to extract hook usage information from 
+WordPress and all the public plugins. 
 
 # Building the project
 
-The build this project, make sure you have dotnet core installed, check out this code and run:
+To build this project, make sure you have dotnet core installed, check out this code and run:
 - `dotnet restore`
 - `dotnet build`
 
