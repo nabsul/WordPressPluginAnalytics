@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="cloudscribe.HtmlAgilityPack" Version="1.0.1" />
     <PackageReference Include="Devsense.Php.Parser" Version="1.2.14" />
-    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="log4net" Version="2.0.10" />
     <PackageReference Include="Microsoft.Azure.Management.DataLake.Analytics" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.Management.DataLake.Store" Version="1.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.1" />
